@@ -1,5 +1,5 @@
 #!/bin/bash
-# Quick installation of odoo using docker containers.
+# Inicio rápido de proyecto odoo
 
 PROJECT_NAME=$1
 ODOO_VERSION=$2
@@ -16,4 +16,4 @@ sed -i 's/14.0/'$ODOO_VERSION'/g' $PROJECT_NAME/.env
 sed -i 's/8075/'$PORT'/g' $PROJECT_NAME/.env
 
 # Running odoo
-docker-compose -f $PROJECT_NAME/docker-compose.yml up -d
+docker-compose -f $PROJECT_NAME/docker-compose.yaml up -d
