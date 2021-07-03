@@ -4,7 +4,7 @@ services:
   odoo:
     container_name: odoo-${PROJECT_NAME}
     image: odoo:${ODOO_VERSION}
-    restart: ${RESTART_POLICY}
+    restart: always
     ports:
       - ${PORT}:8069
     depends_on:
@@ -18,7 +18,7 @@ services:
   db:
     container_name: postgres-${PROJECT_NAME}
     image: postgres:${POSTGRES_VERSION}
-    restart: ${RESTART_POLICY}
+    restart: always
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}

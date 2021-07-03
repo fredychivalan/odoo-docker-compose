@@ -10,8 +10,11 @@ git clone https://github.com/FredyChivalan/odoo-docker-compose $PROJECT_NAME
 rm -rf $PROJECT_NAME/.git
 rm -rf $PROJECT_NAME/install_docker
 
+# Permissions
+chmod 777 $PROJECT_NAME/odoo/addons
+
 # config
-sed -i 's/ecommerce/'$PROJECT_NAME'/g' $PROJECT_NAME/.env
+sed -i 's/proyecto_odoo/'$PROJECT_NAME'/g' $PROJECT_NAME/.env
 sed -i 's/14.0/'$ODOO_VERSION'/g' $PROJECT_NAME/.env
 sed -i 's/8075/'$PORT'/g' $PROJECT_NAME/.env
 
