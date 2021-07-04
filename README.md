@@ -17,6 +17,7 @@ Una solución flexible y rápida para implementar multiples instancias de `Odoo`
 # Cómo implementar
 ## Iniciar una instancia
 **1.** Instale docker y docker-compose en su servidor. (Omita este paso si tiene docker instalado).
+
 **Ubuntu**
 ```bash
 curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/install_docker/install_docker_on_ubuntu.sh | bash
