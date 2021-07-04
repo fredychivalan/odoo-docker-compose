@@ -20,11 +20,11 @@ Una solución flexible y rápida para implementar multiples instancias de `Odoo`
 
 **Ubuntu**
 ```bash
-curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/install_docker/install_docker_on_ubuntu.sh | bash
+curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/resources/install_docker/install_docker_on_ubuntu.sh | bash
 ```
 **Debian**
 ```bash
-curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/install_docker/install_docker_on_debian.sh | bash
+curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/resources/install_docker/install_docker_on_debian.sh | bash
 ```
 
 
@@ -43,7 +43,7 @@ Al final de la línea de comando, encontrará argumentos predeterminados:
 <img src="resources/screenshot/odoo.png" alt="odoo" width="1200"/>
 
 ## Detener y reiniciar una instancia de Odoo
-Ejecute estas instrucciones estando dentro de un proyecto de **Odoo**.
+Ejecute estas instrucciones en un proyecto de **Odoo**.
 
 **Iniciar**
 ```bash
