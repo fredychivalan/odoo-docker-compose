@@ -1,0 +1,10 @@
+<odoo>
+
+    <template id="pos_backup_orders_assets" name="pos_backup_orders assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_backup_orders/static/src/js/pos_backup_orders.js"/>
+            <link rel="stylesheet" href="/pos_backup_orders/static/src/css/pos_backup_orders.css"/>
+        </xpath>
+    </template>
+
+</odoo>
