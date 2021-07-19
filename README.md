@@ -1,13 +1,17 @@
 # Instalando Odoo con docker
+<p align="center">
+  <img src="resources/screenshot/odoo-docker.png" alt="odoo" width="200"/>
+  <br><br>
+	<img src="https://img.shields.io/badge/version-1.2.1-green.svg?style=for-the-badge">
 
-<img src="resources/screenshot/odoo-docker.png" alt="odoo" width="200"/>
+</p>
 
 
 Una solución flexible y rápida para implementar multiples instancias de `Odoo` en un servidor. Algunas razónes por las que usted podría usar esta guía.
-- Versiones soportados de [**Odoo**][odoo] (`12`, `12.0`, `13`, `13.0`, `14`, `14.0`, `latest`).
+- Versiones soportados de [**Odoo**][odoo] (`12.0`, `12`, `13.0`, `13`, `14.0`, `14`, `latest`).
 - Versiones soportados de [**PostgreSQL**][postgres](`10`, `11`, `12`, `13`, `alpine`, `latest`).
 - Configuración optimizada para entorno de desarrollo y producción.
-
+- Integración con **Nginx Proxy Manager**.
 
 ## Requerimientos
 - [Docker][docker]
@@ -71,19 +75,33 @@ curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main
 Tenga en cuenta exponer nombres y puertos diferentes para cada proyecto (por ejemplo, restaurante expone el puerto 8071 y cafeteria expone el puerto 8072).
 
 
+# Nginx Proxy Manager
+
+Instale Nginx Proxy Manager en su servidor.
+Crea un archivo
+```sh
+
+```
+
+
+
+
 # Cómo extender esta guía
 Esta guía está inspirada para sistema operativo GNU/Linux.
 Sin tratar de apoyar a cada posible caso de uso, aquí son sólo algunas que hemos encontrado útiles.
 
 ## Las variables de entorno
-Ajustar estas variables de entorno para conectar fácilmente a un servidor postgres con su proyecto [`Odoo`][odoo]. Alojados en un archivo `.env`
+Ajustar estas variables de entorno para conectar fácilmente a un gestor de base de datos **PostgreSQL** con su proyecto [`Odoo`][odoo]. Las variable de entorno están alojados en el archivo `.env`
+
+### Odoo
 
 `PROJECT_NAME`: Esta opcional variable de entorno se utiliza para definir un nombre diferente para los proyectos de `Odoo`. No debe estar vacío.
 
-
-`ODOO_VERSION`: Esta variables de entorno es necesaria para utilizar [`Odoo`][odoo]. No debe estar vacio. En esta variable de entorno se establece la version soportado y mantenida por [**Odoo**][odoo] (`12`, `12.0`, `13`, `13.0`, `14`, `14.0`, `latest`).
+`ODOO_VERSION`: Esta variables de entorno es necesaria para utilizar [`Odoo`][odoo]. No debe estar vacio. En esta variable de entorno se establece la version soportado y mantenida por [**Odoo**][odoo].
 
 `PORT`: Esta opcional variable de entorno es necesaria para utilizar [`Odoo`][odoo]. No debe estár vacio. Se implementa para exponer el puerto que escuchará el contenedor del proyecto **Odoo**.
+
+### Postgres
 
 `POSTGRES_VERSION`: Esta variables de entorno es necesaria para utilizar PostgreSQL. No debe estar vacio. En esta variable de entorno se establece la version soportado y mantenida por [Postgres][postgres].([Consulte aquí][postgres]), Por defecto utiliza la version `alpine`.
 
@@ -96,7 +114,7 @@ Ajustar estas variables de entorno para conectar fácilmente a un servidor postg
 
 ## Dónde se almacenan los Datos
 
-**Nota importante:** Hay varias maneras de guardar los datos usados por las aplicaciones que se ejecutan en contenedores docker. Animamos a los usuarios de las imágenes postgres para familiarizarse con las [`opciones disponibles`][volumes].
+**Nota importante:** Hay varias maneras de guardar los datos usados por las aplicaciones que se ejecutan en contenedores docker. Animamos a los usuarios de las a familiarizarse con las [`opciones disponibles`][volumes].
 
 
 [docker]: https://docs.docker.com/engine/install/ "Docker"
