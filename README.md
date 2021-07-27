@@ -3,7 +3,7 @@
   <img src="resources/screenshot/odoo-docker.png" alt="odoo" width="200"/>
   <br><br>
 	<img src="https://img.shields.io/badge/version-1.1.2-green.svg?style=for-the-badge">
-  <a href="">
+  <a href="https://www.digitalocean.com/?refcode=9f8258252636&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge">
   <img src="https://img.shields.io/badge/Digital Ocean-$100-green.svg?style=for-the-badge">
   </a>
 
@@ -37,8 +37,7 @@ Una solución flexible y rápida para implementar multiples instancias de `Odoo`
     **Debian**
     ```console
     $ curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/resources/install_docker/debian.sh | bash
-```
-
+    ```
 
 2. Supongamos que desea crear un proyecto de `odoo` llamado "**simple-odoo**".
 
@@ -147,7 +146,7 @@ Ajustar estas variables de entorno para conectar fácilmente a un gestor de base
 
 
 ## Digital Ocean
-  Obten $ 100 de crédito al crear tu cuenta por primera vez en Digital Ocean usando el enlase que se muestra a continuación.
+  Obten `$ 100` de crédito al crear tu cuenta por primera vez en `Digital Ocean` usando el enlase que se muestra a continuación.
 
   <a href="https://www.digitalocean.com/?refcode=9f8258252636&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge"><img src="https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%201.svg" alt="DigitalOcean Referral Badge" /></a>
 
