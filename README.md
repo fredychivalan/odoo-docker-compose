@@ -155,13 +155,13 @@ Sin tratar de apoyar a cada posible caso de uso, aquí son sólo algunas que hem
     Remplace el argumento `$ADDON`, por el nombre del módulo recien creado.
 
 
-4. `Restart`: Para que el nuevo módulo se pueda instalar desde el panel de administración del proycto `Odoo` debe de reiniciar el servicio de [Odoo][odoo].
+4. `Restart`: Para que el nuevo módulo se pueda instalar desde el panel de administración del proycto `Odoo` debe de reiniciar el servicio.
     ```bash
     docker-compose restart
     ```
 
 
-## Las variables de entorno
+## Variables de entorno
 Ajustar estas variables de entorno para conectar fácilmente a un gestor de base de datos **PostgreSQL** con su proyecto [`Odoo`][odoo]. Las variable de entorno están alojados en el archivo `.env`
 
 ### Odoo
