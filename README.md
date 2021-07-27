@@ -2,7 +2,10 @@
 <p align="center">
   <img src="resources/screenshot/odoo-docker.png" alt="odoo" width="200"/>
   <br><br>
-	<img src="https://img.shields.io/badge/version-1.2.1-green.svg?style=for-the-badge">
+	<img src="https://img.shields.io/badge/version-1.1.2-green.svg?style=for-the-badge">
+  <a href="">
+  <img src="https://img.shields.io/badge/Digital Ocean-$100-green.svg?style=for-the-badge">
+  </a>
 
 </p>
 
@@ -13,6 +16,11 @@ Una solución flexible y rápida para implementar multiples instancias de `Odoo`
 - Configuración optimizada para entorno de desarrollo y producción.
 - Integración con **Nginx Proxy Manager**.
 
+## Artítulos relacionados
+- [Docker Official Images][odoo]
+- [Nginx Proxy Manager][proxy]
+- [Implementar Nginx Proxy Manager][FredyChivalan]
+
 ## Requerimientos
 - [Docker][docker]
 - [Docker Compose][docker-compose]
@@ -20,31 +28,34 @@ Una solución flexible y rápida para implementar multiples instancias de `Odoo`
 
 # Cómo implementar
 ## Iniciar una instancia
-**1.** Instale docker y docker-compose en su servidor. (Omita este paso si tiene docker instalado).
+1. Instale docker y docker-compose en su servidor. (Omita este paso si tiene docker instalado).
 
-**Ubuntu**
-```bash
-curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/resources/install_docker/install_docker_on_ubuntu.sh | bash
+    **Ubuntu**
+    ```console
+    $ curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/resources/install_docker/ubuntu.sh | bash
+    ```
+    **Debian**
+    ```console
+    $ curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/resources/install_docker/debian.sh | bash
 ```
-**Debian**
-```bash
-curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/resources/install_docker/install_docker_on_debian.sh | bash
-```
 
 
-**2.** Supongamos que desea crear un proyecto de `odoo` llamado "**simple-odoo**".
-```bash
-curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/run.sh | bash -s simple-odoo 14.0 8070
-```
-Al final de la línea de comando, encontrará argumentos predeterminados:
-  - Primer argumento (**simple-odoo**): nombre del proyecto.
-  - Segundo argumento (**14.0**): Versión de Odoo.
-  - Tercer argumento (**8070**): Puerto a exponer.
+2. Supongamos que desea crear un proyecto de `odoo` llamado "**simple-odoo**".
+
+    ```console
+    $ curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/run.sh | bash -s simple-odoo 14.0 8070
+    ```
+
+    Al final de la línea de comando, encontrará argumentos predeterminados:
+      - Primer argumento (**simple-odoo**): nombre del proyecto.
+      - Segundo argumento (**14.0**): Versión de Odoo.
+      - Tercer argumento (**8070**): Puerto a exponer.
 
 
-**3.** Espere a que se inicialice completamente, y visita `http://localhost:8070` o `http://host-ip:8070` (según corresponda).
+3. Espere a que se inicialice completamente, y visita `http://localhost:8070` o `http://host-ip:8070` (según corresponda).
 
-<img src="resources/screenshot/odoo.png" alt="odoo" width="1200"/>
+    <img src="resources/screenshot/odoo.png" alt="odoo" width="100%"/>
+
 
 ## Detener y reiniciar una instancia de Odoo
 Ejecute estas instrucciones en un proyecto de **Odoo**.
@@ -77,14 +88,32 @@ Tenga en cuenta exponer nombres y puertos diferentes para cada proyecto (por eje
 
 # Nginx Proxy Manager
 
-Instale Nginx Proxy Manager en su servidor.
-Crea un archivo
-```sh
+1. Ejecute la aplicación con Docker Compose
 
-```
+    La carpeta principal de este repositorio contiene un archivo funcional docker-compose.yaml.  Ejecute la aplicación usándola como se muestra a continuación:
+
+    ```console
+    $ curl -s https://gitlab.com/fredy_chivalan/docker-nginx-proxy-manager/-/raw/main/run.sh | bash -s 85
+    ```
+    Al final de la línea de comando, encontrará argumento predeterminado:
+
+      - `85`: Puerto necesario para panel de administración de `hosts`.
 
 
+2. Espere a que se inicialice completamente, y visita `http://localhost:85` o `http://host-ip:85` (según corresponda).
 
+    <img src="resources/screenshot/nginx_proxy.png" alt="odoo" width="100%"/>
+
+
+3. Inicie sesión en la interfaz de usuario de Admin
+
+    De Usuario De Administrador Predeterminada:
+    ```console
+    Email:    admin@example.com
+    Password: changeme
+    ```
+
+    Inmediatamente después de iniciar sesión con este usuario predeterminado, se le pedirá que modifique sus datos y cambie su contraseña.
 
 # Cómo extender esta guía
 Esta guía está inspirada para sistema operativo GNU/Linux.
@@ -117,8 +146,15 @@ Ajustar estas variables de entorno para conectar fácilmente a un gestor de base
 **Nota importante:** Hay varias maneras de guardar los datos usados por las aplicaciones que se ejecutan en contenedores docker. Animamos a los usuarios de las a familiarizarse con las [`opciones disponibles`][volumes].
 
 
+## Digital Ocean
+  Obten $ 100 de crédito al crear tu cuenta por primera vez en Digital Ocean usando el enlase que se muestra a continuación.
+
+  <a href="https://www.digitalocean.com/?refcode=9f8258252636&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge"><img src="https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%201.svg" alt="DigitalOcean Referral Badge" /></a>
+
 [docker]: https://docs.docker.com/engine/install/ "Docker"
 [docker-compose]: https://docs.docker.com/compose/install/ "Docker Compose"
 [odoo]: https://hub.docker.com/_/odoo/ "Odoo"
 [postgres]: https://hub.docker.com/_/postgres/ "Postgres"
 [volumes]: https://docs.docker.com/storage/volumes/ "Volumes"
+[proxy]: https://nginxproxymanager.com/guide/#project-goal "Nginx Proxy Manager"
+[FredyChivalan]: https://gitlab.com/fredy_chivalan/docker-nginx-proxy-manager "Configuración de Nginx"
