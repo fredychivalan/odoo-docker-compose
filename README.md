@@ -31,18 +31,18 @@ Una solución flexible y rápida para implementar multiples instancias de `Odoo`
 1. Instale docker y docker-compose en su servidor. (Omita este paso si tiene docker instalado).
 
     **Ubuntu**
-    ```console
-    $ curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/resources/install_docker/ubuntu.sh | bash
+    ```bash
+    curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/resources/install_docker/ubuntu.sh | bash
     ```
     **Debian**
-    ```console
-    $ curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/resources/install_docker/debian.sh | bash
+    ```bash
+    curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/resources/install_docker/debian.sh | bash
     ```
 
 2. Supongamos que desea crear un proyecto de `odoo` llamado "**simple-odoo**".
 
-    ```console
-    $ curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/run.sh | bash -s simple-odoo 14.0 8070
+    ```bash
+    curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/run.sh | bash -s simple-odoo 14.0 8070
     ```
 
     Al final de la línea de comando, encontrará argumentos predeterminados:
@@ -87,12 +87,9 @@ Tenga en cuenta exponer nombres y puertos diferentes para cada proyecto (por eje
 
 # Nginx Proxy Manager
 
-1. Ejecute la aplicación con Docker Compose
-
-    La carpeta principal de este repositorio contiene un archivo funcional docker-compose.yaml.  Ejecute la aplicación usándola como se muestra a continuación:
-
-    ```console
-    $ curl -s https://gitlab.com/fredy_chivalan/docker-nginx-proxy-manager/-/raw/main/run.sh | bash -s 85
+1. Ejecute la aplicación con Docker Compose, como se muestra a continuación:
+    ```bash
+    curl -s https://gitlab.com/fredy_chivalan/docker-nginx-proxy-manager/-/raw/main/run.sh | bash -s 85
     ```
     Al final de la línea de comando, encontrará argumento predeterminado:
 
@@ -118,26 +115,72 @@ Tenga en cuenta exponer nombres y puertos diferentes para cada proyecto (por eje
 Esta guía está inspirada para sistema operativo GNU/Linux.
 Sin tratar de apoyar a cada posible caso de uso, aquí son sólo algunas que hemos encontrado útiles.
 
+## Entorno de desarrollo
+
+1. `Permisos`: Odoo necesita permisos de lectura y escritura para poder crear un módulo, acceda a su proyecto y ejecute este comando.
+    ```bash
+    chmod 777 odoo/addons
+    ```
+2. `Addon`: Crea un nuevo módulo ejecutando el comando que se muestra a continuación.
+    ```bash
+    docker exec -d odoo-$PROJECT_NAME /usr/bin/odoo scaffold $ADDON /mnt/extra-addons
+    ```
+    Remplace los argumentos:
+    - `$PROJECT_NAME`: Nombre del proyecto que declaró al momento de iniciar una instancia de odoo.
+    - `$ADDON`: Nombre que recibirá el nuevo módulo.
+
+    El finalizar la ejecución del comando, se creará una estructra similar a ésta.
+    ```bash
+    ├── controllers
+    │   ├── controllers.py
+    │   └── __init__.py
+    ├── demo
+    │   └── demo.xml
+    ├── __init__.py
+    ├── __manifest__.py
+    ├── models
+    │   ├── __init__.py
+    │   └── models.py
+    ├── security
+    │   └── ir.model.access.csv
+    └── views
+        ├── templates.xml
+        └── views.xml
+    ```
+
+3. `$USER`: Cambia el propietario de addon recién creado, sino cambia el propietario no podrá editar el código fuente fuera del contenedor.
+    ```bash
+    sudo chown -R $USER:$USER odoo/addons/$ADDON
+    ```
+    Remplace el argumento `$ADDON`, por el nombre del módulo recien creado.
+
+
+4. `Restart`: Para que el nuevo módulo se pueda instalar desde el panel de administración del proycto `Odoo` debe de reiniciar el servicio de [Odoo][odoo].
+    ```bash
+    docker-compose restart
+    ```
+
+
 ## Las variables de entorno
 Ajustar estas variables de entorno para conectar fácilmente a un gestor de base de datos **PostgreSQL** con su proyecto [`Odoo`][odoo]. Las variable de entorno están alojados en el archivo `.env`
 
 ### Odoo
 
-`PROJECT_NAME`: Esta opcional variable de entorno se utiliza para definir un nombre diferente para los proyectos de `Odoo`. No debe estar vacío.
+- `PROJECT_NAME`: Esta opcional variable de entorno se utiliza para definir un nombre diferente para los proyectos de `Odoo`. No debe estar vacío.
 
-`ODOO_VERSION`: Esta variables de entorno es necesaria para utilizar [`Odoo`][odoo]. No debe estar vacio. En esta variable de entorno se establece la version soportado y mantenida por [**Odoo**][odoo].
+- `ODOO_VERSION`: Esta variables de entorno es necesaria para utilizar [`Odoo`][odoo]. No debe estar vacio. En esta variable de entorno se establece la version soportado y mantenida por [**Odoo**][odoo].
 
-`PORT`: Esta opcional variable de entorno es necesaria para utilizar [`Odoo`][odoo]. No debe estár vacio. Se implementa para exponer el puerto que escuchará el contenedor del proyecto **Odoo**.
+- `PORT`: Esta opcional variable de entorno es necesaria para utilizar [`Odoo`][odoo]. No debe estár vacio. Se implementa para exponer el puerto que escuchará el contenedor del proyecto **Odoo**.
 
 ### Postgres
 
-`POSTGRES_VERSION`: Esta variables de entorno es necesaria para utilizar PostgreSQL. No debe estar vacio. En esta variable de entorno se establece la version soportado y mantenida por [Postgres][postgres].([Consulte aquí][postgres]), Por defecto utiliza la version `alpine`.
+- `POSTGRES_VERSION`: Esta variables de entorno es necesaria para utilizar PostgreSQL. No debe estar vacio. En esta variable de entorno se establece la version soportado y mantenida por [Postgres][postgres].([Consulte aquí][postgres]), Por defecto utiliza la version `alpine`.
 
-`POSTGRES_USER`: Este opcional variable de entorno se utiliza en conjunción con `POSTGRES_PASSWORD` configurar un usuario y su contraseña. Esta variable va a crear el usuario especificado con permisos de superusuario y una base de datos con el mismo nombre. Si no se especifica, el valor predeterminado de usuario de `postgres` va a ser utilizado.
+- `POSTGRES_USER`: Este opcional variable de entorno se utiliza en conjunción con `POSTGRES_PASSWORD` configurar un usuario y su contraseña. Esta variable va a crear el usuario especificado con permisos de superusuario y una base de datos con el mismo nombre. Si no se especifica, el valor predeterminado de usuario de `postgres` va a ser utilizado.
 
-`POSTGRES_DB`: Este opcional variable de entorno se pueden utilizar para definir un nombre diferente para la base de datos por defecto que se crea cuando la imagen se inicia por primera vez. Si no es especificado, entonces el valor de `POSTGRES_USER` va a ser utilizado.
+- `POSTGRES_DB`: Este opcional variable de entorno se pueden utilizar para definir un nombre diferente para la base de datos por defecto que se crea cuando la imagen se inicia por primera vez. Si no es especificado, entonces el valor de `POSTGRES_USER` va a ser utilizado.
 
-`POSTGRES_PASSWORD`: Esta variable de entorno es necesaria para utilizar PostgreSQL. No debe estar vacío o indefinido. Esta variable de entorno se establece la contraseña de superusuario para PostgreSQL. El valor predeterminado de superusuario se define por la `POSTGRES_USER` la variable de entorno.
+- `POSTGRES_PASSWORD`: Esta variable de entorno es necesaria para utilizar PostgreSQL. No debe estar vacío o indefinido. Esta variable de entorno se establece la contraseña de superusuario para PostgreSQL. El valor predeterminado de superusuario se define por la `POSTGRES_USER` la variable de entorno.
 
 
 ## Dónde se almacenan los Datos
@@ -146,7 +189,7 @@ Ajustar estas variables de entorno para conectar fácilmente a un gestor de base
 
 
 ## Digital Ocean
-  Obten `$ 100` de crédito al crear tu cuenta por primera vez en `Digital Ocean` usando el enlase que se muestra a continuación.
+  Obten `$ 100.00` de crédito al crear tu cuenta por primera vez en `Digital Ocean` usando el enlace que se muestra a continuación.
 
   <a href="https://www.digitalocean.com/?refcode=9f8258252636&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge"><img src="https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%201.svg" alt="DigitalOcean Referral Badge" /></a>
 
