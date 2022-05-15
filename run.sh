@@ -3,12 +3,12 @@
 read -p "Nombre del proyecto [quickstart]: " PROJECT
 
 if [ "$PROJECT" != "" ]; then
-  git clone https://gitlab.com/sre_source/docker/odoo-docker-compose.git $PROJECT
+  git clone -b dev https://gitlab.com/sre_source/docker/odoo-docker-compose.git $PROJECT
   cd $PROJECT
   echo "PROJECT=$PROJECT" >>.env
 else
   PROJECT=Quickstart
-  git clone https://gitlab.com/sre_source/docker/odoo-docker-compose.git $PROJECT
+  git clone -b dev https://gitlab.com/sre_source/docker/odoo-docker-compose.git $PROJECT
   cd $PROJECT
   echo "PROJECT=$PROJECT" >>.env
 fi
