@@ -7,7 +7,7 @@ if [ "$PROJECT" != "" ]; then
   cd $PROJECT
   echo "PROJECT=$PROJECT" >>.env
 else
-  PROJECT=Quickstart
+  PROJECT=quickstart
   git clone -b dev https://gitlab.com/sre_source/docker/odoo-docker-compose.git $PROJECT
   cd $PROJECT
   echo "PROJECT=$PROJECT" >>.env
@@ -30,9 +30,7 @@ echo PORT=80$PORT >>.env
 # Database credentials
 # --------------------
 PASS=$(openssl rand -base64 32)
-echo DB_USER=odoo >>.env
 echo DB_PASSWORD=$PASS >>.env
-echo DB_POSTGRES=postgres >>.env
 
 echo "admin_passwd = $PASS" >>./odoo/config/odoo.conf
 

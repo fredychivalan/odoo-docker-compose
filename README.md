@@ -36,7 +36,7 @@ Crea un nuevo proyecto de `odoo` ejecutando el siguiente comando e ingresar `Nom
 la `version de Odoo`.
 
 ```shell
-curl -s https://gitlab.com/sre_source/docker/odoo-docker-compose/-/raw/dev/run.sh | bash
+bash <(curl -s https://gitlab.com/sre_source/docker/odoo-docker-compose/-/raw/dev/run.sh)
 ```
 
 ```shell
