@@ -1,123 +1,136 @@
 # Instalando Odoo con docker
-<p align="center">
-  <img src="resources/screenshot/odoo-docker.png" alt="odoo" width="200"/>
-  <br><br>
-	<img src="https://img.shields.io/badge/version-1.1.2-green.svg?style=for-the-badge">
-  <a href="https://www.digitalocean.com/?refcode=9f8258252636&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge">
-  <img src="https://img.shields.io/badge/Digital Ocean-$100-green.svg?style=for-the-badge">
-  </a>
 
+<p align="center">
+<img src="resources/screenshot/odoo-docker.png" alt="odoo" width="200"/>
+<br><br>
+<a href="https://gitlab.com/sre_source/docker/odoo-docker-compose/-/releases">
+    <img alt="Latest Release" src="https://gitlab.com/sre_source/docker/odoo-docker-compose/-/badges/release.svg" />
+</a>
+<a href="https://www.digitalocean.com/?refcode=7573edbd78a2&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge">
+    <img alt="Digital Ocean" src="https://img.shields.io/badge/Digital Ocean-$100-green.svg" />
+</a>
 </p>
 
 
-Una solución flexible y rápida para implementar multiples instancias de `Odoo` en un servidor. Algunas razónes por las que usted podría usar esta guía.
-- Versiones soportados de [**Odoo**][odoo] (`12.0`, `12`, `13.0`, `13`, `14.0`, `14`, `latest`).
-- Versiones soportados de [**PostgreSQL**][postgres](`10`, `11`, `12`, `13`, `alpine`, `latest`).
-- Configuración optimizada para entorno de desarrollo y producción.
-- Integración con **Nginx Proxy Manager**.
+Una solución flexible, rápida, para impulsar proyecos de [**Odoo**][odoo_web] en producción.
 
-## Artítulos relacionados
-- [Docker Official Images][odoo]
-- [Nginx Proxy Manager][proxy]
-- [Implementar Nginx Proxy Manager][FredyChivalan]
+- Versiones soportados de [**Odoo**][odoo] (`13.0`, `13`, `14.0`, `14`, `15.0`, `15`, `latest`).
+- Versiones soportados de [**PostgreSQL**][postgres](`10`, `11`, `12`, `13`, `14`, `alpine`, `latest`).
+
+## Caracteristicas
+
+- Para multiples versiones de [**Odoo**][odoo]
+- Multiples instancias en un mismo servidor
+- Configuraciones de desarrollo y producción optimizadas
+- Compatibilidad con Docker mediante [docker-compose][docker_compose] para desarrollo y producción
+- Contraseña generada con [OpenSSL][openssl]
 
 ## Requerimientos
+
 - [Docker][docker]
 - [Docker Compose][docker-compose]
 
+## Uso
 
-# Cómo implementar
-## Iniciar una instancia
-1. Instale docker y docker-compose en su servidor. (Omita este paso si tiene docker instalado).
+Crea un nuevo proyecto de `odoo` ejecutando el siguiente comando e ingresar `Nombre del proyecto`, y
+la `version de Odoo`.
 
-    **Ubuntu**
-    ```bash
-    curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/resources/install_docker/ubuntu.sh | bash
-    ```
-    **Debian**
-    ```bash
-    curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/resources/install_docker/debian.sh | bash
-    ```
+```shell
+curl -s https://gitlab.com/sre_source/docker/odoo-docker-compose/-/raw/dev/run.sh | bash
+```
 
-2. Supongamos que desea crear un proyecto de `odoo` llamado "**simple-odoo**".
+```shell
+Nombre del proyecto [quickstart]: super_ecommerce
+Seleccione versión de Odoo:
+1) 15
+2) 15.0
+3) 14
+4) 14.0
+5) 13
+6) 13.0
+Seleccione de 1, 2, 3, 4, 5 [1]: 1
 
-    ```bash
-    curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/run.sh | bash -s simple-odoo 14.0 8070
-    ```
+Configurando...
+...
+```
 
-    Al final de la línea de comando, encontrará argumentos predeterminados:
-      - Primer argumento (**simple-odoo**): nombre del proyecto.
-      - Segundo argumento (**14.0**): Versión de Odoo.
-      - Tercer argumento (**8070**): Puerto a exponer.
+_Puede tardar unos minutos, tenga paciencia mientras se implementa_
+
+### Pasos posteriores a la instalación
+
+Al finalizar la instalación podrá visualizar contenido similar, sigue estos pasos para terminar de crear su proyecto.
+
+```shell
+NOMBRE: super_ecommerce
+ESTADO: Implementado
+NOTAS:
+**Puede tardar unos minutos, tenga paciencia mientras se implementa**
+
+1. Pude acceder a super_ecommerce a travéz de
+   http://localhost:8054 o http://host-ip:8054
+
+2. Obtenga la contraseña ejecutando el comando:
+   cat super_ecommerce/.env | grep DB_PASSWORD
+```
+
+Acceda a su nuevo proyecto.
+<img src="resources/screenshot/01-odoo.png" alt="odoo" width="100%"/>
+
+En el siguiente formulario deberá ingresar `Master Password`, para obtener la contraseña deberá ejecutar el siguiente
+comando:
+
+```shell
+cat super_ecommerce/.env | grep DB_PASSWORD
+```
+
+Copie el valor de `DB_PASSWORD` e ingrese en su formulario de `Odoo`.
+
+```shell
+DB_PASSWORD=4D0Uv1G9wm08rXoboTAqHlkqK/Ui79QHCincSr9SY3I=
+```
+
+<img src="resources/screenshot/02-odoo.png" alt="odoo" width="100%"/>
 
 
-3. Espere a que se inicialice completamente, y visita `http://localhost:8070` o `http://host-ip:8070` (según corresponda).
+**Paso Opcional:** Entre en el proyecto, (_Recuerde remplazar el nombre del proyecto_) y puede listar el contenido.
 
-    <img src="resources/screenshot/odoo.png" alt="odoo" width="100%"/>
+```shell
+cd super_ecommerce
+ls 
+```
 
+## Comandos de docker
 
-## Detener y reiniciar una instancia de Odoo
-Ejecute estas instrucciones en un proyecto de **Odoo**.
+Es posible que necesite iniciar, reiniciar o detener el proyecto de  **Odoo**, asegurese de estar en el directerio de trabajo.
+Ejecute la instrucción deseada.
 
 **Iniciar**
-```bash
+
+```shell
 docker-compose up -d
 ```
+
 **Reiniciar**
-```bash
+
+```shell
 docker-compose restart
 ```
+
 **Detener**
-```bash
+
+```shell
 docker-compose down
 ```
 
-## Ejecutar varias instancias de Odoo
+## Cómo extender esta guía
 
-**Restaurante**
-```bash
-curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/run.sh | bash -s restaurante 12.0 8071
-```
-**Cafetería**
-```bash
-curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/run.sh | bash -s cafeteria 13.0 8072
-```
-Tenga en cuenta exponer nombres y puertos diferentes para cada proyecto (por ejemplo, restaurante expone el puerto 8071 y cafeteria expone el puerto 8072).
-
-
-# Nginx Proxy Manager
-
-1. Ejecute la aplicación con Docker Compose, como se muestra a continuación:
-    ```bash
-    curl -s https://gitlab.com/fredy_chivalan/docker-nginx-proxy-manager/-/raw/main/run.sh | bash -s 85
-    ```
-    Al final de la línea de comando, encontrará argumento predeterminado:
-
-      - `85`: Puerto necesario para panel de administración de `hosts`.
-
-
-2. Espere a que se inicialice completamente, y visita `http://localhost:85` o `http://host-ip:85` (según corresponda).
-
-    <img src="resources/screenshot/nginx_proxy.png" alt="odoo" width="100%"/>
-
-
-3. Inicie sesión en la interfaz de usuario de Admin
-
-    De Usuario De Administrador Predeterminada:
-    ```console
-    Email:    admin@example.com
-    Password: changeme
-    ```
-
-    Inmediatamente después de iniciar sesión con este usuario predeterminado, se le pedirá que modifique sus datos y cambie su contraseña.
-
-# Cómo extender esta guía
 Esta guía está inspirada para sistema operativo GNU/Linux.
 Sin tratar de apoyar a cada posible caso de uso, aquí son sólo algunas que hemos encontrado útiles.
 
-## Entorno de desarrollo
+### Entorno de desarrollo
 
-1. `Permisos`: Odoo necesita permisos de lectura y escritura para poder crear un módulo, acceda a su proyecto y ejecute este comando.
+1. `Permisos`: Odoo necesita permisos de lectura y escritura para poder crear un módulo, acceda a su proyecto y ejecute
+   este comando.
     ```bash
     chmod 777 odoo/addons
     ```
@@ -125,11 +138,11 @@ Sin tratar de apoyar a cada posible caso de uso, aquí son sólo algunas que hem
     ```bash
     docker exec -d odoo-$PROJECT_NAME /usr/bin/odoo scaffold $ADDON /mnt/extra-addons
     ```
-    Remplace los argumentos:
+   Remplace los argumentos:
     - `$PROJECT_NAME`: Nombre del proyecto que declaró al momento de iniciar una instancia de odoo.
     - `$ADDON`: Nombre que recibirá el nuevo módulo.
 
-    El finalizar la ejecución del comando, se creará una estructra similar a ésta.
+   El finalizar la ejecución del comando, se creará una estructra similar a ésta.
     ```bash
     ├── controllers
     │   ├── controllers.py
@@ -148,55 +161,82 @@ Sin tratar de apoyar a cada posible caso de uso, aquí son sólo algunas que hem
         └── views.xml
     ```
 
-3. `$USER`: Cambia el propietario de addon recién creado, sino cambia el propietario no podrá editar el código fuente fuera del contenedor.
+3. `$USER`: Cambia el propietario de addon recién creado, sino cambia el propietario no podrá editar el código fuente
+   fuera del contenedor.
     ```bash
     sudo chown -R $USER:$USER odoo/addons/$ADDON
     ```
-    Remplace el argumento `$ADDON`, por el nombre del módulo recien creado.
+   Remplace el argumento `$ADDON`, por el nombre del módulo recien creado.
 
 
-4. `Restart`: Para que el nuevo módulo se pueda instalar desde el panel de administración del proycto `Odoo` debe de reiniciar el servicio.
+4. `Restart`: Para que el nuevo módulo se pueda instalar desde el panel de administración del proycto `Odoo` debe de
+   reiniciar el servicio.
     ```bash
     docker-compose restart
     ```
 
-
 ## Variables de entorno
-Ajustar estas variables de entorno para conectar fácilmente a un gestor de base de datos **PostgreSQL** con su proyecto [`Odoo`][odoo]. Las variable de entorno están alojados en el archivo `.env`
+
+Ajustar estas variables de entorno para conectar fácilmente a un gestor de base de datos **PostgreSQL** con su
+proyecto [`Odoo`][odoo]. Las variable de entorno están alojados en el archivo `.env`
 
 ### Odoo
 
-- `PROJECT_NAME`: Esta opcional variable de entorno se utiliza para definir un nombre diferente para los proyectos de `Odoo`. No debe estar vacío.
+- `PROJECT`: Esta opcional variable de entorno se utiliza para definir un nombre diferente para los proyectos
+  de `Odoo`. No debe estar vacío.
 
-- `ODOO_VERSION`: Esta variables de entorno es necesaria para utilizar [`Odoo`][odoo]. No debe estar vacio. En esta variable de entorno se establece la version soportado y mantenida por [**Odoo**][odoo].
+- `ODOO_VERSION`: Esta variables de entorno es necesaria para utilizar [`Odoo`][odoo]. No debe estar vacio. En esta
+  variable de entorno se establece la version soportado y mantenida por [**Odoo**][odoo].
 
-- `PORT`: Esta opcional variable de entorno es necesaria para utilizar [`Odoo`][odoo]. No debe estár vacio. Se implementa para exponer el puerto que escuchará el contenedor del proyecto **Odoo**.
+- `PORT`: Esta opcional variable de entorno es necesaria para utilizar [`Odoo`][odoo]. No debe estár vacio. Se
+  implementa para exponer el puerto que escuchará el contenedor del proyecto **Odoo**.
 
 ### Postgres
 
-- `POSTGRES_VERSION`: Esta variables de entorno es necesaria para utilizar PostgreSQL. No debe estar vacio. En esta variable de entorno se establece la version soportado y mantenida por [Postgres][postgres].([Consulte aquí][postgres]), Por defecto utiliza la version `alpine`.
+- `POSTGRES_VERSION`: Esta variables de entorno es necesaria para utilizar PostgreSQL. No debe estar vacio. En esta
+  variable de entorno se establece la version soportado y mantenida por [Postgres][postgres].([Consulte aquí][postgres])
+  , Por defecto utiliza la version `alpine`.
 
-- `POSTGRES_USER`: Este opcional variable de entorno se utiliza en conjunción con `POSTGRES_PASSWORD` configurar un usuario y su contraseña. Esta variable va a crear el usuario especificado con permisos de superusuario y una base de datos con el mismo nombre. Si no se especifica, el valor predeterminado de usuario de `postgres` va a ser utilizado.
+- `POSTGRES_USER`: Este opcional variable de entorno se utiliza en conjunción con `POSTGRES_PASSWORD` configurar un
+  usuario y su contraseña. Esta variable va a crear el usuario especificado con permisos de superusuario y una base de
+  datos con el mismo nombre. Si no se especifica, el valor predeterminado de usuario de `postgres` va a ser utilizado.
 
-- `POSTGRES_DB`: Este opcional variable de entorno se pueden utilizar para definir un nombre diferente para la base de datos por defecto que se crea cuando la imagen se inicia por primera vez. Si no es especificado, entonces el valor de `POSTGRES_USER` va a ser utilizado.
+- `POSTGRES_DB`: Este opcional variable de entorno se pueden utilizar para definir un nombre diferente para la base de
+  datos por defecto que se crea cuando la imagen se inicia por primera vez. Si no es especificado, entonces el valor
+  de `POSTGRES_USER` va a ser utilizado.
 
-- `POSTGRES_PASSWORD`: Esta variable de entorno es necesaria para utilizar PostgreSQL. No debe estar vacío o indefinido. Esta variable de entorno se establece la contraseña de superusuario para PostgreSQL. El valor predeterminado de superusuario se define por la `POSTGRES_USER` la variable de entorno.
-
+- `POSTGRES_PASSWORD`: Esta variable de entorno es necesaria para utilizar PostgreSQL. No debe estar vacío o indefinido.
+  Esta variable de entorno se establece la contraseña de superusuario para PostgreSQL. El valor predeterminado de
+  superusuario se define por la `POSTGRES_USER` la variable de entorno.
 
 ## Dónde se almacenan los Datos
 
-**Nota importante:** Hay varias maneras de guardar los datos usados por las aplicaciones que se ejecutan en contenedores docker. Animamos a los usuarios de las a familiarizarse con las [`opciones disponibles`][volumes].
-
+**Nota importante:** Hay varias maneras de guardar los datos usados por las aplicaciones que se ejecutan en contenedores
+docker. Animamos a los usuarios de las a familiarizarse con las [`opciones disponibles`][volumes].
 
 ## Digital Ocean
-  Obten `$ 100.00` de crédito al crear tu cuenta por primera vez en `Digital Ocean` usando el enlace que se muestra a continuación.
 
-  <a href="https://www.digitalocean.com/?refcode=9f8258252636&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge"><img src="https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%201.svg" alt="DigitalOcean Referral Badge" /></a>
+Obten `$ 100.00` de crédito al crear tu cuenta por primera vez en `Digital Ocean` usando el enlace que se muestra a
+continuación.
+
+<a href="https://www.digitalocean.com/?refcode=9f8258252636&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge"><img src="https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%201.svg" alt="DigitalOcean Referral Badge" /></a>
 
 [docker]: https://docs.docker.com/engine/install/ "Docker"
+
 [docker-compose]: https://docs.docker.com/compose/install/ "Docker Compose"
+
+[docker_compose]: https://github.com/docker/compose "Docker Compose"
+
+[openssl]: https://www.openssl.org/ "OpenSSL"
+
+[odoo_web]: https://www.odoo.com/es_ES "Odoo"
+
 [odoo]: https://hub.docker.com/_/odoo/ "Odoo"
+
 [postgres]: https://hub.docker.com/_/postgres/ "Postgres"
+
 [volumes]: https://docs.docker.com/storage/volumes/ "Volumes"
+
 [proxy]: https://nginxproxymanager.com/guide/#project-goal "Nginx Proxy Manager"
+
 [FredyChivalan]: https://gitlab.com/fredy_chivalan/docker-nginx-proxy-manager "Configuración de Nginx"
