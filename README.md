@@ -1,92 +1,202 @@
-# Odoo Docker Compose
+# Instalando Odoo con docker
+<p align="center">
+  <img src="resources/screenshot/odoo-docker.png" alt="odoo" width="200"/>
+  <br><br>
+	<img src="https://img.shields.io/badge/version-1.1.2-green.svg?style=for-the-badge">
+  <a href="https://www.digitalocean.com/?refcode=9f8258252636&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge">
+  <img src="https://img.shields.io/badge/Digital Ocean-$100-green.svg?style=for-the-badge">
+  </a>
 
-Quick installation of  Odoo using docker containers. 
+</p>
 
-## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Una solución flexible y rápida para implementar multiples instancias de `Odoo` en un servidor. Algunas razónes por las que usted podría usar esta guía.
+- Versiones soportados de [**Odoo**][odoo] (`12.0`, `12`, `13.0`, `13`, `14.0`, `14`, `latest`).
+- Versiones soportados de [**PostgreSQL**][postgres](`10`, `11`, `12`, `13`, `alpine`, `latest`).
+- Configuración optimizada para entorno de desarrollo y producción.
+- Integración con **Nginx Proxy Manager**.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Artítulos relacionados
+- [Docker Official Images][odoo]
+- [Nginx Proxy Manager][proxy]
+- [Implementar Nginx Proxy Manager][FredyChivalan]
 
-## Add your files
+## Requerimientos
+- [Docker][docker]
+- [Docker Compose][docker-compose]
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
 
+# Cómo implementar
+## Iniciar una instancia
+1. Instale docker y docker-compose en su servidor. (Omita este paso si tiene docker instalado).
+
+    **Ubuntu**
+    ```bash
+    curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/resources/install_docker/ubuntu.sh | bash
+    ```
+    **Debian**
+    ```bash
+    curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/resources/install_docker/debian.sh | bash
+    ```
+
+2. Supongamos que desea crear un proyecto de `odoo` llamado "**simple-odoo**".
+
+    ```bash
+    curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/run.sh | bash -s simple-odoo 14.0 8070
+    ```
+
+    Al final de la línea de comando, encontrará argumentos predeterminados:
+      - Primer argumento (**simple-odoo**): nombre del proyecto.
+      - Segundo argumento (**14.0**): Versión de Odoo.
+      - Tercer argumento (**8070**): Puerto a exponer.
+
+
+3. Espere a que se inicialice completamente, y visita `http://localhost:8070` o `http://host-ip:8070` (según corresponda).
+
+    <img src="resources/screenshot/odoo.png" alt="odoo" width="100%"/>
+
+
+## Detener y reiniciar una instancia de Odoo
+Ejecute estas instrucciones en un proyecto de **Odoo**.
+
+**Iniciar**
+```bash
+docker-compose up -d
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/sre_source/docker/odoo-docker-compose.git
-git branch -M main
-git push -uf origin main
+**Reiniciar**
+```bash
+docker-compose restart
+```
+**Detener**
+```bash
+docker-compose down
 ```
 
-## Integrate with your tools
+## Ejecutar varias instancias de Odoo
 
-- [ ] [Set up project integrations](https://gitlab.com/sre_source/docker/odoo-docker-compose/-/settings/integrations)
+**Restaurante**
+```bash
+curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/run.sh | bash -s restaurante 12.0 8071
+```
+**Cafetería**
+```bash
+curl -s https://raw.githubusercontent.com/FredyChivalan/odoo-docker-compose/main/run.sh | bash -s cafeteria 13.0 8072
+```
+Tenga en cuenta exponer nombres y puertos diferentes para cada proyecto (por ejemplo, restaurante expone el puerto 8071 y cafeteria expone el puerto 8072).
 
-## Collaborate with your team
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+# Nginx Proxy Manager
 
-## Test and Deploy
+1. Ejecute la aplicación con Docker Compose, como se muestra a continuación:
+    ```bash
+    curl -s https://gitlab.com/fredy_chivalan/docker-nginx-proxy-manager/-/raw/main/run.sh | bash -s 85
+    ```
+    Al final de la línea de comando, encontrará argumento predeterminado:
 
-Use the built-in continuous integration in GitLab.
+      - `85`: Puerto necesario para panel de administración de `hosts`.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
 
-***
+2. Espere a que se inicialice completamente, y visita `http://localhost:85` o `http://host-ip:85` (según corresponda).
 
-# Editing this README
+    <img src="resources/screenshot/nginx_proxy.png" alt="odoo" width="100%"/>
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+3. Inicie sesión en la interfaz de usuario de Admin
 
-## Name
-Choose a self-explaining name for your project.
+    De Usuario De Administrador Predeterminada:
+    ```console
+    Email:    admin@example.com
+    Password: changeme
+    ```
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+    Inmediatamente después de iniciar sesión con este usuario predeterminado, se le pedirá que modifique sus datos y cambie su contraseña.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+# Cómo extender esta guía
+Esta guía está inspirada para sistema operativo GNU/Linux.
+Sin tratar de apoyar a cada posible caso de uso, aquí son sólo algunas que hemos encontrado útiles.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+## Entorno de desarrollo
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+1. `Permisos`: Odoo necesita permisos de lectura y escritura para poder crear un módulo, acceda a su proyecto y ejecute este comando.
+    ```bash
+    chmod 777 odoo/addons
+    ```
+2. `Addon`: Crea un nuevo módulo ejecutando el comando que se muestra a continuación.
+    ```bash
+    docker exec -d odoo-$PROJECT_NAME /usr/bin/odoo scaffold $ADDON /mnt/extra-addons
+    ```
+    Remplace los argumentos:
+    - `$PROJECT_NAME`: Nombre del proyecto que declaró al momento de iniciar una instancia de odoo.
+    - `$ADDON`: Nombre que recibirá el nuevo módulo.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+    El finalizar la ejecución del comando, se creará una estructra similar a ésta.
+    ```bash
+    ├── controllers
+    │   ├── controllers.py
+    │   └── __init__.py
+    ├── demo
+    │   └── demo.xml
+    ├── __init__.py
+    ├── __manifest__.py
+    ├── models
+    │   ├── __init__.py
+    │   └── models.py
+    ├── security
+    │   └── ir.model.access.csv
+    └── views
+        ├── templates.xml
+        └── views.xml
+    ```
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+3. `$USER`: Cambia el propietario de addon recién creado, sino cambia el propietario no podrá editar el código fuente fuera del contenedor.
+    ```bash
+    sudo chown -R $USER:$USER odoo/addons/$ADDON
+    ```
+    Remplace el argumento `$ADDON`, por el nombre del módulo recien creado.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+4. `Restart`: Para que el nuevo módulo se pueda instalar desde el panel de administración del proycto `Odoo` debe de reiniciar el servicio.
+    ```bash
+    docker-compose restart
+    ```
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+## Variables de entorno
+Ajustar estas variables de entorno para conectar fácilmente a un gestor de base de datos **PostgreSQL** con su proyecto [`Odoo`][odoo]. Las variable de entorno están alojados en el archivo `.env`
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+### Odoo
 
-## License
-For open source projects, say how it is licensed.
+- `PROJECT_NAME`: Esta opcional variable de entorno se utiliza para definir un nombre diferente para los proyectos de `Odoo`. No debe estar vacío.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+- `ODOO_VERSION`: Esta variables de entorno es necesaria para utilizar [`Odoo`][odoo]. No debe estar vacio. En esta variable de entorno se establece la version soportado y mantenida por [**Odoo**][odoo].
+
+- `PORT`: Esta opcional variable de entorno es necesaria para utilizar [`Odoo`][odoo]. No debe estár vacio. Se implementa para exponer el puerto que escuchará el contenedor del proyecto **Odoo**.
+
+### Postgres
+
+- `POSTGRES_VERSION`: Esta variables de entorno es necesaria para utilizar PostgreSQL. No debe estar vacio. En esta variable de entorno se establece la version soportado y mantenida por [Postgres][postgres].([Consulte aquí][postgres]), Por defecto utiliza la version `alpine`.
+
+- `POSTGRES_USER`: Este opcional variable de entorno se utiliza en conjunción con `POSTGRES_PASSWORD` configurar un usuario y su contraseña. Esta variable va a crear el usuario especificado con permisos de superusuario y una base de datos con el mismo nombre. Si no se especifica, el valor predeterminado de usuario de `postgres` va a ser utilizado.
+
+- `POSTGRES_DB`: Este opcional variable de entorno se pueden utilizar para definir un nombre diferente para la base de datos por defecto que se crea cuando la imagen se inicia por primera vez. Si no es especificado, entonces el valor de `POSTGRES_USER` va a ser utilizado.
+
+- `POSTGRES_PASSWORD`: Esta variable de entorno es necesaria para utilizar PostgreSQL. No debe estar vacío o indefinido. Esta variable de entorno se establece la contraseña de superusuario para PostgreSQL. El valor predeterminado de superusuario se define por la `POSTGRES_USER` la variable de entorno.
+
+
+## Dónde se almacenan los Datos
+
+**Nota importante:** Hay varias maneras de guardar los datos usados por las aplicaciones que se ejecutan en contenedores docker. Animamos a los usuarios de las a familiarizarse con las [`opciones disponibles`][volumes].
+
+
+## Digital Ocean
+  Obten `$ 100.00` de crédito al crear tu cuenta por primera vez en `Digital Ocean` usando el enlace que se muestra a continuación.
+
+  <a href="https://www.digitalocean.com/?refcode=9f8258252636&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge"><img src="https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%201.svg" alt="DigitalOcean Referral Badge" /></a>
+
+[docker]: https://docs.docker.com/engine/install/ "Docker"
+[docker-compose]: https://docs.docker.com/compose/install/ "Docker Compose"
+[odoo]: https://hub.docker.com/_/odoo/ "Odoo"
+[postgres]: https://hub.docker.com/_/postgres/ "Postgres"
+[volumes]: https://docs.docker.com/storage/volumes/ "Volumes"
+[proxy]: https://nginxproxymanager.com/guide/#project-goal "Nginx Proxy Manager"
+[FredyChivalan]: https://gitlab.com/fredy_chivalan/docker-nginx-proxy-manager "Configuración de Nginx"
