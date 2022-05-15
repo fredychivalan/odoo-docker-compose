@@ -42,3 +42,4 @@ setup/win32/static/postgresql*.exe
 
 # Other
 .idea/
+.env
