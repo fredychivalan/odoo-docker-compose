@@ -247,3 +247,7 @@ continuación.
 [proxy]: https://nginxproxymanager.com/guide/#project-goal "Nginx Proxy Manager"
 
 [FredyChivalan]: https://gitlab.com/fredy_chivalan/docker-nginx-proxy-manager "Configuración de Nginx"
+
+### Infrastructure model
+
+![Infrastructure model](.infragenie/infrastructure_model.png)
