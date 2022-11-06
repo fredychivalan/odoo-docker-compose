@@ -6,9 +6,6 @@
 <a href="https://gitlab.com/sre_source/docker/odoo-docker-compose/-/releases">
     <img alt="Latest Release" src="https://gitlab.com/sre_source/docker/odoo-docker-compose/-/badges/release.svg" />
 </a>
-<a href="https://www.digitalocean.com/?refcode=7573edbd78a2&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge">
-    <img alt="Digital Ocean" src="https://img.shields.io/badge/Digital Ocean-$100-green.svg" />
-</a>
 </p>
 
 
@@ -36,7 +33,7 @@ Crea un nuevo proyecto de `odoo` ejecutando el siguiente comando e ingrese `Nomb
 la `version de Odoo`.
 
 ```shell
-bash <(curl -s https://gitlab.com/sre_source/docker/odoo-docker-compose/-/raw/main/run.sh)
+bash <(curl -s https://gitlab.com/sre_resource/docker/odoo-docker-compose/-/raw/main/run.sh)
 ```
 
 **Advertencia**: después de este punto, cambie 'super_ecommerce'. a su propia información.
@@ -219,14 +216,6 @@ proyecto [`Odoo`][odoo]. Las variable de entorno están alojados en el archivo `
 **Nota importante:** Hay varias maneras de guardar los datos usados por las aplicaciones que se ejecutan en contenedores
 docker. Animamos a los usuarios de las a familiarizarse con las [`opciones disponibles`][volumes].
 
-## Digital Ocean
-
-Obten `$ 100.00` de crédito al crear tu cuenta por primera vez en `Digital Ocean` usando el enlace que se muestra a
-continuación.
-
-<a href="https://www.digitalocean.com/?refcode=7573edbd78a2&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge">
-<img src="https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%201.svg" alt="DigitalOcean Referral Badge" />
-</a>
 
 [docker]: https://docs.docker.com/engine/install/ "Docker"
 
