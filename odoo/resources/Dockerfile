@@ -6,7 +6,7 @@ USER root
 
 RUN pip3 install pip --upgrade
 
-COPY ./odoo/config/requirements.txt /tmp/
+COPY ./odoo/resources/requirements.txt /tmp/
 RUN pip install -r /tmp/requirements.txt
 
 USER odoo

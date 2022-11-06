@@ -17,7 +17,7 @@ echo "Seleccione versión de Odoo:"
 select version in latest 16 16.0 15 15.0 14 14.0 13 13.0; do
   if [ "$version" != "" ]; then
     echo "ODOO_VERSION=$version" >> .env
-    sed -i 's/latest/'$version'/g' $PROJECT/odoo/resources/Dockerfile
+    sed -i 's/latest/'$version'/g' odoo/resources/Dockerfile
     break
   else
     echo "Selección incorrecta "
