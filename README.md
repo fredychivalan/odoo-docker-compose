@@ -26,11 +26,12 @@ Una solución flexible, rápida, para impulsar proyectos de [**Odoo**][odoo_web]
 
 - [Docker][docker]
 - [Docker Compose][docker-compose]
+- [Git][git]
+- [Curl][curl]
 
 ## Uso
-
-Crea un nuevo proyecto de `odoo` ejecutando el siguiente comando e ingrese `Nombre del proyecto`, y
-la `version de Odoo`.
+Crea un nuevo proyecto de `odoo` ejecutando el siguiente comando; ingrese `Nombre del proyecto`, y
+elija la `versión de Odoo`.
 
 ```shell
 bash <(curl -s https://gitlab.com/sre_resource/docker/odoo-docker-compose/-/raw/main/run.sh)
@@ -43,13 +44,16 @@ Por ejemplo:
 Nombre del proyecto [quickstart]: super_ecommerce
 ...
 Seleccione versión de Odoo:
-1) 15
-2) 15.0
-3) 14
-4) 14.0
-5) 13
-6) 13.0
-Seleccione de 1, 2, 3, 4, 5 [1]: 1
+1) latest
+2) 16
+3) 16.0
+4) 15
+5) 15.0
+6) 14
+7) 14.0
+8) 13
+9) 13.0
+Seleccione de 1, 2, 3, 4, 5, 6, 7, 8, 9 [1]: 
 
 Configurando...
 ...
@@ -74,11 +78,11 @@ NOTAS:
    cat super_ecommerce/.env | grep DB_PASSWORD
 ```
 
-Acceda a su nuevo proyecto.
+### Acceda a su nuevo proyecto.
 <img src="resources/screenshot/01-odoo.png" alt="odoo" width="100%"/>
 
 En el siguiente formulario deberá ingresar `Master Password`, para obtener la contraseña deberá ejecutar el siguiente
-comando:
+comando (_Ejucanto el paso "2" después de la instalación del proyecto_):
 
 ```shell
 cat super_ecommerce/.env | grep DB_PASSWORD
@@ -109,19 +113,19 @@ Ejecute la instrucción deseada.
 **Iniciar**
 
 ```shell
-docker-compose up -d
+docker compose up -d
 ```
 
 **Reiniciar**
 
 ```shell
-docker-compose restart
+docker compose restart
 ```
 
 **Detener**
 
 ```shell
-docker-compose down
+docker compose down
 ```
 
 ## Cómo extender esta guía

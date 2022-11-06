@@ -1,0 +1,14 @@
+# ----------------------
+# Agregar paquetes de Python
+# ----------------------
+# Seguramente necesitas instalar paquetes extras de Pyhton para tu proyecto, sigue estos pasos para instalar nuevos paquetes:
+# Paso 1:
+#        Detener el proyecto (debes de estar dentro del directorio de tu proyecto) "docker compose down"
+# Paso 2:
+#       Añade los paquetes nuevos necesarios para tu proyecto (documento para seguimientos futuros).
+# Paso 3:
+#       Inicia nuevamente tu proyecto "docker compose up --build -d"
+
+
+# auto-backup [8-15]  https://odoo-community.org/shop/database-auto-backup-550?search=auto+backup#attr=21119
+# pysftp==0.2.9

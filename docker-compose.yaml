@@ -2,8 +2,11 @@ version: '3'
 
 services:
   odoo:
+    build:
+      context: .
+      dockerfile: ./odoo/resources/Dockerfile
     container_name: odoo_${PROJECT}
-    image: odoo:${ODOO_VERSION}
+    image: ${PROJECT}:${ODOO_VERSION}
     restart: always
     ports:
       - "${PORT}:8069"
@@ -12,7 +15,6 @@ services:
     volumes:
       - ./odoo/config/:/etc/odoo
       - ./odoo/addons/:/mnt/extra-addons
-      - ./odoo/logs/:/var/log/odoo
     environment:
       - HOST=postgres
       - USER=${DB_USER:-odoo}
