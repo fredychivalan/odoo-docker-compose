@@ -40,7 +40,7 @@ rm -rf .git
 rm -rf resources
 
 # Run docker comose
-docker compose up -d
+docker-compose up -d
 
 printf "
 NOMBRE: $PROJECT
